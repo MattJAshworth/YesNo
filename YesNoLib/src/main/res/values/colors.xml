@@ -1,0 +1,5 @@
+<resources>
+    <color name="unselected_blue">#0D2548</color>
+    <color name="no">#E53935</color>
+    <color name="yes">#43A047</color>
+</resources>

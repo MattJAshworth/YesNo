@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="YesNoButton">
+        <attr name="UnselectedColor" format="color" />
+        <attr name="YesButtonColor" format="color"/>
+        <attr name="NoButtonColor" format="color"/>
+        <attr name="YesTextColor" format="color"/>
+        <attr name="NoTextColor" format="color"/>
+        <attr name="CornerRadius" format="integer"/>
+    </declare-styleable>
+</resources>
