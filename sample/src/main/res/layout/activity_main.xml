@@ -13,6 +13,11 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         app:CornerRadius="50"
+        app:NoTextColor="@color/default_text"
+        app:YesTextColor="@color/default_text"
+        app:UnselectedColor="@color/default_unselected"
+        app:YesButtonColor="@color/default_yes"
+        app:NoButtonColor="@color/default_no"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

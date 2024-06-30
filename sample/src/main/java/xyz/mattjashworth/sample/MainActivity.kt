@@ -26,6 +26,7 @@ class MainActivity : AppCompatActivity() {
         val yesNoButtons = findViewById<YesNoButton>(R.id.yesNoDemo)
         yesNoButtons.setOnYesNoClickListener(object : YesNoButton.OnClickListener {
             override fun onClick(model: YesNoResult) {
+                //Show Snackbar with result (Yes, No, None)
                 Snackbar.make(rootView, model.name, Snackbar.LENGTH_LONG).show()
             }
 

@@ -7,5 +7,7 @@
         <attr name="YesTextColor" format="color"/>
         <attr name="NoTextColor" format="color"/>
         <attr name="CornerRadius" format="integer"/>
+        <attr name="yesButtonText" format="string"/>
+        <attr name="noButtonText" format="string"/>
     </declare-styleable>
 </resources>

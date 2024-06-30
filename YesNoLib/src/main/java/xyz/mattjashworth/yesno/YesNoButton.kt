@@ -47,6 +47,10 @@ class YesNoButton(context: Context, attributeSet: AttributeSet) : ConstraintLayo
         yesColor = ta.getColorStateList(R.styleable.YesNoButton_YesButtonColor) ?: context.getColorStateList(R.color.yes)
         noColor = ta.getColorStateList(R.styleable.YesNoButton_NoButtonColor) ?: context.getColorStateList(R.color.no)
         val cornerRadius = ta.getInt(R.styleable.YesNoButton_CornerRadius, 0)
+        val yesButtonText = ta.getText(R.styleable.YesNoButton_yesButtonText)
+        val noButtonText = ta.getText(R.styleable.YesNoButton_noButtonText)
+        val yesTextColor = ta.getColorStateList(R.styleable.YesNoButton_YesTextColor) ?: context.getColorStateList(R.color.white)
+        val noTextColor = ta.getColorStateList(R.styleable.YesNoButton_NoTextColor) ?: context.getColorStateList(R.color.white)
         ta.recycle()
 
         val shapeLeft = GradientDrawable()
@@ -61,6 +65,12 @@ class YesNoButton(context: Context, attributeSet: AttributeSet) : ConstraintLayo
 
         yesButton = root.findViewById<MaterialButton>(R.id.btn_yes)
         noButton = root.findViewById<MaterialButton>(R.id.btn_no)
+
+        if (yesButtonText != null) yesButton.text = yesButtonText
+        if (noButtonText != null) noButton.text = noButtonText
+
+        yesButton.setTextColor(yesTextColor)
+        noButton.setTextColor(noTextColor)
 
         yesButton.background = shapeLeft
         noButton.background = shapeRight
