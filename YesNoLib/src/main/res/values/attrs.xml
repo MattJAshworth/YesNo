@@ -9,5 +9,6 @@
         <attr name="CornerRadius" format="integer"/>
         <attr name="yesButtonText" format="string"/>
         <attr name="noButtonText" format="string"/>
+        <attr name="multiSelectMode" format="boolean"/>
     </declare-styleable>
 </resources>

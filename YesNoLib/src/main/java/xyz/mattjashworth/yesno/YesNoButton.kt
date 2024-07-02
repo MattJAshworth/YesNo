@@ -31,6 +31,7 @@ class YesNoButton(context: Context, attributeSet: AttributeSet) : ConstraintLayo
     private var unselectedColor: ColorStateList
     private var yesColor: ColorStateList
     private var noColor: ColorStateList
+    private var multiSelectMode: Boolean
 
 
 
@@ -51,6 +52,7 @@ class YesNoButton(context: Context, attributeSet: AttributeSet) : ConstraintLayo
         val noButtonText = ta.getText(R.styleable.YesNoButton_noButtonText)
         val yesTextColor = ta.getColorStateList(R.styleable.YesNoButton_YesTextColor) ?: context.getColorStateList(R.color.white)
         val noTextColor = ta.getColorStateList(R.styleable.YesNoButton_NoTextColor) ?: context.getColorStateList(R.color.white)
+        multiSelectMode = ta.getBoolean(R.styleable.YesNoButton_multiSelectMode, false)
         ta.recycle()
 
         val shapeLeft = GradientDrawable()
@@ -90,36 +92,89 @@ class YesNoButton(context: Context, attributeSet: AttributeSet) : ConstraintLayo
 
     private fun update(newState: YesNoResult, ctx: Context) {
 
-        when(newState) {
-            YesNoResult.Yes -> {
-                if (state == newState) {
-                    //Unselect
-                    state = null
-                    onClickListener?.onClick(YesNoResult.None)
-                    yesButton.backgroundTintList = unselectedColor
-                } else {
-                    if (state == YesNoResult.No)
-                        noButton.backgroundTintList = unselectedColor
-                    state = newState
-                    onClickListener?.onClick(YesNoResult.Yes)
-                    yesButton.backgroundTintList = yesColor
-                }
+        //This is horrible code. //TODO: Revisit when more time
+        if (multiSelectMode) {
+
+            if (state == null || state == YesNoResult.None) {
+                state = newState
+                onClickListener?.onClick(newState)
             }
-            YesNoResult.No -> {
-                if (state == newState) {
-                    //Unselect
-                    state = null
-                    onClickListener?.onClick(YesNoResult.None)
+            else if (state == YesNoResult.Yes && newState == YesNoResult.No) {
+                state = YesNoResult.Both
+                onClickListener?.onClick(YesNoResult.Both)
+            }
+            else if (state == YesNoResult.No && newState == YesNoResult.Yes) {
+                state = YesNoResult.Both
+                onClickListener?.onClick(YesNoResult.Both)
+            }
+            else if (state == YesNoResult.Both) {
+                if (newState == YesNoResult.Yes)
+                    state = YesNoResult.No
+                if (newState == YesNoResult.No)
+                    state = YesNoResult.Yes
+
+                onClickListener?.onClick(state!!)
+            } else {
+               state = YesNoResult.None
+                onClickListener?.onClick(state!!)
+            }
+
+
+            when (state) {
+                YesNoResult.Yes -> {
+                    yesButton.backgroundTintList = yesColor
                     noButton.backgroundTintList = unselectedColor
-                } else {
-                    if (state == YesNoResult.Yes)
-                        yesButton.backgroundTintList = unselectedColor
-                    state = newState
-                    onClickListener?.onClick(YesNoResult.No)
+                }
+                YesNoResult.No -> {
+                    noButton.backgroundTintList = noColor
+                    yesButton.backgroundTintList = unselectedColor
+
+                }
+                YesNoResult.Both -> {
+                    yesButton.backgroundTintList = yesColor
                     noButton.backgroundTintList = noColor
                 }
-            } else -> return
+                YesNoResult.None -> {
+                    yesButton.backgroundTintList = unselectedColor
+                    noButton.backgroundTintList = unselectedColor
+
+                } else ->{}
+            }
+
+        } else {
+            when(newState) {
+                YesNoResult.Yes -> {
+                    if (state == newState) {
+                        //Unselect
+                        state = null
+                        onClickListener?.onClick(YesNoResult.None)
+                        yesButton.backgroundTintList = unselectedColor
+                    } else {
+                        if (state == YesNoResult.No)
+                            noButton.backgroundTintList = unselectedColor
+                        state = newState
+                        onClickListener?.onClick(YesNoResult.Yes)
+                        yesButton.backgroundTintList = yesColor
+                    }
+                }
+                YesNoResult.No -> {
+                    if (state == newState) {
+                        //Unselect
+                        state = null
+                        onClickListener?.onClick(YesNoResult.None)
+                        noButton.backgroundTintList = unselectedColor
+                    } else {
+                        if (state == YesNoResult.Yes)
+                            yesButton.backgroundTintList = unselectedColor
+                        state = newState
+                        onClickListener?.onClick(YesNoResult.No)
+                        noButton.backgroundTintList = noColor
+                    }
+                } else -> return
+            }
         }
+
+
     }
 
     fun setOnYesNoClickListener(onItemSelectedListener: OnClickListener) {
