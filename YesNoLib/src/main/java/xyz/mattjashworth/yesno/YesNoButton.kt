@@ -177,6 +177,31 @@ class YesNoButton(context: Context, attributeSet: AttributeSet) : ConstraintLayo
 
     }
 
+    fun setSelected(selected: YesNoResult) {
+
+        when(selected) {
+            YesNoResult.Yes -> {
+                yesButton.backgroundTintList = yesColor
+                noButton.backgroundTintList = unselectedColor
+            }
+            YesNoResult.No -> {
+                noButton.backgroundTintList = noColor
+                yesButton.backgroundTintList = unselectedColor
+            }
+            YesNoResult.Both -> {
+                yesButton.backgroundTintList = yesColor
+                noButton.backgroundTintList = noColor
+            }
+            YesNoResult.None -> {
+                yesButton.backgroundTintList = unselectedColor
+                noButton.backgroundTintList = unselectedColor
+            }
+        }
+
+        this.onClickListener?.onClick(selected)
+
+    }
+
     fun setOnYesNoClickListener(onItemSelectedListener: OnClickListener) {
         this.onClickListener = onItemSelectedListener
     }
