@@ -177,7 +177,7 @@ class YesNoButton(context: Context, attributeSet: AttributeSet) : ConstraintLayo
 
     }
 
-    fun setSelected(selected: YesNoResult) {
+    fun setSelected(selected: YesNoResult, triggerUpdate: Boolean) {
 
         when(selected) {
             YesNoResult.Yes -> {
@@ -198,7 +198,8 @@ class YesNoButton(context: Context, attributeSet: AttributeSet) : ConstraintLayo
             }
         }
 
-        this.onClickListener?.onClick(selected)
+        if (triggerUpdate)
+            this.onClickListener?.onClick(selected)
 
     }
 
